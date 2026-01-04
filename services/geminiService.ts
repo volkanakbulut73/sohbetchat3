@@ -43,6 +43,7 @@ export const generateGroupResponse = async (
     3. Cevaplar KESİNLİKE saf metin olmalı, HTML etiketi içermemelidir.
     4. Kullanıcıya "${userName}" ismiyle hitap edebilirsin.
     5. En fazla 2 botun cevabını üret.
+    6. "botId" alanı YUKARIDAKİ LİSTEDEKİ ID'LERDEN BİRİ OLMAK ZORUNDADIR (Örn: bot_socrates).
     
     ÇIKTI FORMATI:
     Sadece JSON dizisi döndür.
@@ -90,6 +91,7 @@ export const generateGroupResponse = async (
         try {
             const cleanJson = resultText.replace(/```json/g, '').replace(/```/g, '').trim();
             const parsed = JSON.parse(cleanJson) as BotResponseItem[];
+            // Bot ID'lerini doğrula
             return parsed.filter(item => bots.some(b => b.id === item.botId));
         } catch (e) {
             console.error("JSON Parse Hatası:", e, resultText);

@@ -178,6 +178,8 @@ const AiChatModule: React.FC<AiChatModuleProps> = ({
         currentUser.name
       );
 
+      console.log("Bot Responses:", botResponses);
+
       if (botResponses && botResponses.length > 0) {
         for (const resp of botResponses) {
           const bot = participants.find((p) => p.id === resp.botId);
@@ -188,7 +190,14 @@ const AiChatModule: React.FC<AiChatModuleProps> = ({
             let finalMessage = resp.message;
             
             if (bot.id === 'bot_socrates') {
-              finalMessage = await generateSocratesResponse(currentMessages, currentUser.name);
+              try {
+                const socratesResponse = await generateSocratesResponse(currentMessages, currentUser.name);
+                if (socratesResponse) {
+                   finalMessage = socratesResponse;
+                }
+              } catch (e) {
+                console.error("Socrates response error, using fallback.", e);
+              }
             }
 
             await sendMessageToPb({

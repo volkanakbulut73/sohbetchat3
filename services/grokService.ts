@@ -30,7 +30,7 @@ export const generateSocratesResponse = async (
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-pro-preview",
+      model: "gemini-3-flash-preview",
       contents: `Sohbet Geçmişi:\n${historyText}\n\nSokrates olarak (soru sorarak) cevap ver:`,
       config: {
         systemInstruction: systemInstruction,
